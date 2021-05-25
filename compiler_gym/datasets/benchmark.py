@@ -304,6 +304,12 @@ class Benchmark:
     def __ne__(self, other: Union[str, "Benchmark"]):
         return not self == other
 
+    def __lt__(self, other: Union[str, "Benchmark"]):
+        if isinstance(other, Benchmark):
+            return self.uri < other.uri
+        else:
+            return self.uri < other
+
 
 class BenchmarkInitError(OSError):
     """Base class for errors raised if a benchmark fails to initialize."""
