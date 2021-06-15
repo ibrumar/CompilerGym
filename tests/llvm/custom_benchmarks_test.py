@@ -129,6 +129,13 @@ def test_make_benchmark_single_bitcode(env: LlvmEnv):
     assert env.observation["IrInstructionCount"] == EXAMPLE_BITCODE_IR_INSTRUCTION_COUNT
 
 
+def test_make_benchmark_custom_uri(env: LlvmEnv):
+    benchmark = llvm.make_benchmark(
+        EXAMPLE_BITCODE_FILE, uri="benchmark://my-v0/benchmark"
+    )
+    assert benchmark.uri == "benchmark://my-v0/benchmark"
+
+
 @bazel_only
 def test_make_benchmark_single_ll():
     """Test passing a single .ll file into make_benchmark()."""

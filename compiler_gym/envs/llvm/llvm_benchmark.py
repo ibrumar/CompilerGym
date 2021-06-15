@@ -199,6 +199,7 @@ def make_benchmark(
     copt: Optional[List[str]] = None,
     system_includes: bool = True,
     timeout: int = 600,
+    uri: Optional[str] = None,
 ) -> Benchmark:
     """Create a benchmark for use by LLVM environments.
 
@@ -272,6 +273,9 @@ def make_benchmark(
     :param timeout: The maximum number of seconds to allow clang to run before
         terminating.
 
+    :param uri: The URI of the benchmark to generate. If not provided, a URI
+        is generated.
+
     :return: A :code:`Benchmark` instance.
 
     :raises FileNotFoundError: If any input sources are not found.
@@ -324,7 +328,7 @@ def make_benchmark(
     # Shortcut if we only have a single pre-compiled bitcode.
     if len(bitcodes) == 1 and not clang_jobs:
         bitcode = bitcodes[0]
-        return Benchmark.from_file(uri=f"file:///{bitcode}", path=bitcode)
+        return Benchmark.from_file(uri=uri or f"file:///{bitcode}", path=bitcode)
 
     tmpdir_root = transient_cache_path(".")
     tmpdir_root.mkdir(exist_ok=True, parents=True)
@@ -395,5 +399,5 @@ def make_benchmark(
                 )
 
     timestamp = datetime.now().strftime("%Y%m%HT%H%M%S")
-    uri = f"benchmark://user/{timestamp}-{random.randrange(16**4):04x}"
+    uri = uri or f"benchmark://user/{timestamp}-{random.randrange(16**4):04x}"
     return Benchmark.from_file_contents(uri, bitcode)

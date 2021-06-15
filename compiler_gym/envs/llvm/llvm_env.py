@@ -309,6 +309,7 @@ class LlvmEnv(CompilerEnv):
         ],
         copt: Optional[List[str]] = None,
         system_includes: bool = True,
+        uri: Optional[str] = None,
         timeout: int = 600,
     ) -> Benchmark:
         """Create a benchmark for use with this environment.
@@ -377,6 +378,9 @@ class LlvmEnv(CompilerEnv):
             during compilation jobs. This requires a system toolchain. See
             :func:`get_system_includes`.
 
+        :param uri: The URI of the benchmark to generate. If not provided, a URI
+            is generated.
+
         :param timeout: The maximum number of seconds to allow clang to run
             before terminating.
 
@@ -395,6 +399,7 @@ class LlvmEnv(CompilerEnv):
             inputs=inputs,
             copt=copt,
             system_includes=system_includes,
+            uri=uri,
             timeout=timeout,
         )
 
