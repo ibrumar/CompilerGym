@@ -3,6 +3,8 @@ name: Release Build
 
 on:
     workflow_dispatch:
+    # FIXME(cummins): For debugging we will run this action on pushes to PRs.
+    pull_request:
 
 jobs:
     build:
