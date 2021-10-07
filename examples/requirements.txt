@@ -1,1 +1,2 @@
+ray[default,rllib]==1.4.1
 torch>=1.6.0
